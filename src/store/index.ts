@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { combineReducers } from "redux";
-import { syncData } from "./app/AppAction";
+import { syncData, isLoading } from "./app/AppAction";
 import { appReducer } from "./app/AppReducer";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -9,13 +9,18 @@ export const rootReducer = combineReducers({
 });
 
 const mapStateToProps = (state: RootState) => {
-    return state;
+    const GlobalState = {
+        ...state
+    }
+    return { GlobalState };
 };
 
 const mapDispatchToProps = () =>  {
-    return { 
-        syncData: syncData  
-    };
+    const GlobalActions = {
+        syncData: syncData,
+        isLoading: isLoading
+    }
+    return { GlobalActions };
 }
   
 export type GlobalState = ReturnType<typeof mapStateToProps>;
