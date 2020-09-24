@@ -7,13 +7,15 @@ const API_KEY: string = `9e9a7f0853639f65d040365a1533b6081e91ccbd`;
 
 const FIELD_LIST: string[] = ['image', 'date_added', 'name', 'issue_number', 'volume']; // Change field modal issues
 
-export const getIssues = async (): Promise<IGetIssuesResquest> => {
+export const LIMIT_PER_PAGE: number = 100;
+
+export const getIssues = async (offset: number): Promise<IGetIssuesResquest> => {
     const params: IGetIssuesParams = {
         api_key: API_KEY,
         field_list: FIELD_LIST.join(','),
         format: 'json',
-        // limit: limit,
-        // offset: offset
+        limit: LIMIT_PER_PAGE,
+        offset: offset
     };
     const request = await axios.get(`${PROXY_URL}${HOST}/issues`, { params }); 
     return request.data as IGetIssuesResquest;
@@ -24,8 +26,8 @@ type IGetIssuesParams = {
     api_key: string;
     field_list: string;
     format: 'json';
-    // limit: number;
-    // offset: number;
+    limit: number;
+    offset: number;
 }
 
 // Requests

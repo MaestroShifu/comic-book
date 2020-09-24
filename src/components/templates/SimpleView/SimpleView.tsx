@@ -3,14 +3,18 @@ import { Typography, Button } from '@material-ui/core';
 import { WrapperSimpleView } from './WrapperSimpleView.styled';
 import { DividerStyled } from '../../atoms/Divider/Divider.styled';
 import { LoadingStyled } from '../../atoms/Loading/Loading.styled';
+import Pagination from '@material-ui/lab/Pagination';
 
 import AppsIcon from '@material-ui/icons/Apps';
 import ReorderIcon from '@material-ui/icons/Reorder';
 
 interface SimpleViewProps {
+    page: number;
+    countPage: number;
     isList: boolean;
     isLoading: boolean;
     handleView: () => void;
+    handleChangePage: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
 export const SimpleView: React.FunctionComponent<SimpleViewProps> = (props) => {
@@ -42,6 +46,8 @@ export const SimpleView: React.FunctionComponent<SimpleViewProps> = (props) => {
             <div className='container-comic'>
                 { props.children }
             </div>
+
+            <Pagination count={props.countPage} page={props.page} onChange={props.handleChangePage} shape='rounded' />
         </WrapperSimpleView>
     );
 }

@@ -30,6 +30,7 @@ interface IImageIssue {
 export type AppState = {
     isLoading: boolean;
     issues: IIssue[];
+    totalIssues: number;
 }
 
 // Actions
@@ -40,6 +41,7 @@ interface SyncState {
     type: typeof SYNC_DATA,
     payload: {
         issues: IIssue[];
+        totalIssues: number;
     }
 }
 
