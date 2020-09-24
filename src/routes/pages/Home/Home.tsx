@@ -3,24 +3,26 @@ import { ConnectRedux } from '../../../store';
 import { PageProps } from '../../Routes';
 import { SimpleView } from '../../../components/templates/SimpleView/SimpleView';
 import { useDispatch } from 'react-redux';
-import { isLoading } from '../../../store/app/AppAction';
+import { CardIssue } from '../../../components/molecules/CardIssue/CardIssue';
 
 const Home: React.FunctionComponent<PageProps> = (props) => {
-    const { app } = props.GlobalState;
+    const { app } = props.globalState;
     const dispatch = useDispatch();
-    const [isList, setIsList] = useState<boolean>(true);
+    const [isList, setIsList] = useState<boolean>(false);
 
     useEffect(() => {
-        dispatch(isLoading());
-    }, [dispatch])
-
-    const handleView = () => {
+        dispatch(props.globalActions.syncData());
+    }, [dispatch]);
+        
+    const handleView = async () => {
         setIsList(!isList);
     }
 
+    const issuesCard = app.issues.map(issue => <CardIssue key={`${issue.issue_number}_${issue.volume.name}`} isList={isList} dateAdded={issue.date_added} issueNumber={issue.issue_number} sourceImg={issue.image.original_url} name={issue.volume.name} />); 
+
     return (
         <SimpleView handleView={handleView} isList={isList} isLoading={app.isLoading}>
-            <h1>Hola</h1>
+            { issuesCard }
         </SimpleView>
     );
 }

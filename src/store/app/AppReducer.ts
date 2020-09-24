@@ -9,7 +9,7 @@ export const appReducer = (state: AppState = initialState, action: AppActionType
     const currentState = { ...state };
     switch (action.type) {
         case SYNC_DATA: {
-            console.log('Funciona');
+            currentState.issues = [...action.payload.issues];
             break;
         }
         case IS_LOADING: {

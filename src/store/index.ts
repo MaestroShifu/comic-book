@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import { combineReducers } from "redux";
+import { combineReducers, Store, createStore, applyMiddleware } from "redux";
+import ReduxThunk from 'redux-thunk';
 import { syncData, isLoading } from "./app/AppAction";
 import { appReducer } from "./app/AppReducer";
 
@@ -9,21 +10,26 @@ export const rootReducer = combineReducers({
 });
 
 const mapStateToProps = (state: RootState) => {
-    const GlobalState = {
-        ...state
+    const globalState = {
+        app: state.app
     }
-    return { GlobalState };
+    return { globalState };
 };
 
 const mapDispatchToProps = () =>  {
-    const GlobalActions = {
+    const globalActions = {
         syncData: syncData,
         isLoading: isLoading
     }
-    return { GlobalActions };
+    return { globalActions };
 }
   
 export type GlobalState = ReturnType<typeof mapStateToProps>;
 export type GlobalDispatch = ReturnType<typeof mapDispatchToProps>;
 
 export const ConnectRedux = connect(mapStateToProps, mapDispatchToProps);
+
+export const configureStore = (): Store<RootState> => {
+    const store = createStore(rootReducer, undefined, applyMiddleware(ReduxThunk));
+    return store;
+}

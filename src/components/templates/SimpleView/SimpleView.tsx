@@ -15,7 +15,7 @@ interface SimpleViewProps {
 
 export const SimpleView: React.FunctionComponent<SimpleViewProps> = (props) => {
     return (
-        <WrapperSimpleView>
+        <WrapperSimpleView isList={props.isList}>
             { props.isLoading && <LoadingStyled /> }
 
             <Typography variant='h3'>
@@ -29,11 +29,11 @@ export const SimpleView: React.FunctionComponent<SimpleViewProps> = (props) => {
 
                 <div>
                     <Button onClick={props.handleView} className={props.isList ? 'select-btn' : ''}>
-                        <AppsIcon />
+                        <ReorderIcon />
                         List
                     </Button>
                     <Button onClick={props.handleView} className={!props.isList ? 'select-btn' : ''}>
-                        <ReorderIcon />
+                        <AppsIcon />
                         Grid
                     </Button>
                 </div>
