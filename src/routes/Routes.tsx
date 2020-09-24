@@ -2,6 +2,7 @@ import React from 'react';
 import { GlobalState, GlobalDispatch } from '../store';
 import { RouteComponentProps, Route, Switch } from 'react-router';
 import { HomePage } from './pages/Home/Home';
+import { ComicDetailsPage } from './pages/ComicDetails/ComicDetails';
 
 interface RouteURL {
     exact: boolean;
@@ -17,6 +18,11 @@ export const Routes: React.FunctionComponent = () => {
             exact: true,
             path: '/',
             component: HomePage
+        },
+        {
+            exact: true,
+            path: '/comic-details',
+            component: ComicDetailsPage
         },
         {
             exact: false,

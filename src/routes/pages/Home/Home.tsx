@@ -5,13 +5,15 @@ import { SimpleView } from '../../../components/templates/SimpleView/SimpleView'
 import { useDispatch } from 'react-redux';
 import { CardIssue } from '../../../components/molecules/CardIssue/CardIssue';
 import { LIMIT_PER_PAGE } from '../../../services/ComicApi';
+import { useHistory } from 'react-router';
 
 const Home: React.FunctionComponent<PageProps> = (props) => {
     const { app } = props.globalState;
-    const { syncData } = props.globalActions;
+    const { syncData, getIssueData } = props.globalActions;
     const dispatch = useDispatch();
     const [isList, setIsList] = useState<boolean>(true);
     const [page, setPage] = React.useState(1);
+    const history = useHistory();
     
     const count = app.totalIssues / LIMIT_PER_PAGE;
     const offset = LIMIT_PER_PAGE * (page - 1);
@@ -29,7 +31,12 @@ const Home: React.FunctionComponent<PageProps> = (props) => {
         setPage(value);
     };
 
-    const issuesCard = app.issues.map(issue => <CardIssue key={`${issue.issue_number}_${issue.volume.name}`} isList={isList} dateAdded={issue.date_added} issueNumber={issue.issue_number} sourceImg={issue.image.original_url} name={issue.volume.name} />); 
+    const handleSelect = async (url: string) => {
+        dispatch(await getIssueData(url));
+        history.push('/comic-details');
+    }
+    
+    const issuesCard = app.issues.map(issue => <CardIssue key={`${issue.issue_number}_${issue.volume.name}`} isList={isList} issue={issue} handleSelect={handleSelect} />); 
     return (
         <SimpleView countPage={count} page={page} handleChangePage={handleChangePage} handleView={handleView} isList={isList} isLoading={app.isLoading} >
             { issuesCard }

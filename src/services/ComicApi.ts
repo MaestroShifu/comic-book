@@ -1,23 +1,46 @@
 import axios from 'axios';
-import { IIssue } from '../store/app/AppTypes';
+import { IIssue, IGetIssue, IGetGenericData } from '../store/app/AppTypes';
 
 const PROXY_URL = 'https://lit-badlands-08756.herokuapp.com/'; // Cors problem fuc***
 const HOST: string = `https://comicvine.gamespot.com/api`;
 const API_KEY: string = `9e9a7f0853639f65d040365a1533b6081e91ccbd`;
 
-const FIELD_LIST: string[] = ['image', 'date_added', 'name', 'issue_number', 'volume']; // Change field modal issues
+const FIELD_LIST_ISSUES: string[] = ['image', 'date_added', 'name', 'issue_number', 'volume', 'api_detail_url']; // Change field modal issues
+
+const FIELD_LIST_ISSUE: string[] = ['id', 'image', 'character_credits', 'volume', 'team_credits', 'location_credits', 'concept_credits'];
+const FIELD_LIST_GENERIC: string[] = ['id', 'image', 'name'];
 
 export const LIMIT_PER_PAGE: number = 100;
 
-export const getIssues = async (offset: number): Promise<IGetIssuesResquest> => {
+export const getIssues = async(offset: number): Promise<IGetIssuesResquest> => {
     const params: IGetIssuesParams = {
         api_key: API_KEY,
-        field_list: FIELD_LIST.join(','),
+        field_list: FIELD_LIST_ISSUES.join(','),
         format: 'json',
         limit: LIMIT_PER_PAGE,
         offset: offset
     };
     const request = await axios.get(`${PROXY_URL}${HOST}/issues`, { params }); 
+    return request.data as IGetIssuesResquest;
+}
+
+export const getIssue = async(apiDetailUrl: string): Promise<IGetIssuesResquest> => {
+    const params: IGenericParams = {
+        api_key: API_KEY,
+        field_list: FIELD_LIST_ISSUE.join(','),
+        format: 'json'
+    }
+    const request = await axios.get(`${PROXY_URL}${apiDetailUrl}`, { params }); 
+    return request.data as IGetIssuesResquest;
+}
+
+export const getGeneric = async(apiDetailUrl: string): Promise<IGetIssuesResquest> => {
+    const params: IGenericParams = {
+        api_key: API_KEY,
+        field_list: FIELD_LIST_GENERIC.join(','),
+        format: 'json'
+    }
+    const request = await axios.get(`${PROXY_URL}${apiDetailUrl}`, { params }); 
     return request.data as IGetIssuesResquest;
 }
 
@@ -30,6 +53,12 @@ type IGetIssuesParams = {
     offset: number;
 }
 
+type IGenericParams = {
+    api_key: string;
+    field_list: string;
+    format: 'json';
+}
+
 // Requests
 type IGetIssuesResquest = {
     error: string;
@@ -38,7 +67,7 @@ type IGetIssuesResquest = {
     number_of_page_results: number;
     number_of_total_results: number;
     status_code: StatusCode;
-    results: IIssue[];
+    results: IIssue[] | IGetIssue | IGetGenericData;
     version: string;
 }
 

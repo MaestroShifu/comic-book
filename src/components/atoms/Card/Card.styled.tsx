@@ -9,6 +9,7 @@ const type = (props: ICardStyledProps) => props.type === 'grid' ? grid : list;
 
 export const CardStyled = styled(Card)`
     display: flex;
+    cursor: pointer;
     ${type}
 `;
 

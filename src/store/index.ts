@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { combineReducers, Store, createStore, applyMiddleware } from "redux";
 import ReduxThunk from 'redux-thunk';
-import { syncData, isLoading } from "./app/AppAction";
+import { syncData, isLoading, getIssueData } from "./app/AppAction";
 import { appReducer } from "./app/AppReducer";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -19,7 +19,8 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = () =>  {
     const globalActions = {
         syncData: syncData,
-        isLoading: isLoading
+        isLoading: isLoading,
+        getIssueData: getIssueData
     }
     return { globalActions };
 }
