@@ -7,12 +7,13 @@ import { CardIssue } from '../../../components/molecules/CardIssue/CardIssue';
 
 const Home: React.FunctionComponent<PageProps> = (props) => {
     const { app } = props.globalState;
+    const { syncData } = props.globalActions;
     const dispatch = useDispatch();
-    const [isList, setIsList] = useState<boolean>(false);
+    const [isList, setIsList] = useState<boolean>(true);
 
     useEffect(() => {
-        dispatch(props.globalActions.syncData());
-    }, [dispatch]);
+        dispatch(syncData());
+    }, [dispatch, syncData]);
         
     const handleView = async () => {
         setIsList(!isList);

@@ -5,16 +5,36 @@ interface ICardStyledProps {
     type: 'list' | 'grid';
 }
 
-const margin = (props: ICardStyledProps) => props.type === 'grid' ? 'margin: 1rem;' : 'margin: 1rem 0px;' ;  
-const flexDirection = (props: ICardStyledProps) => props.type === 'grid' ? 'flex-direction: column;' : 'flex-direction: row;' ;
-const justifyContent = (props: ICardStyledProps) => props.type === 'list' ? 'justify-content: space-between;' : '';
-const maxWith = (props: ICardStyledProps) => props.type === 'grid' ? 'max-width: 20rem;' : 'width: 60rem;';
+const type = (props: ICardStyledProps) => props.type === 'grid' ? grid : list;
 
 export const CardStyled = styled(Card)`
     display: flex;
+    ${type}
+`;
+
+const grid: string = `
     margin: 1rem;
-    ${margin}
-    ${flexDirection}
-    ${justifyContent}
-    ${maxWith}
+    flex-direction: column;
+    max-width: 20rem;
+    @media (max-width: 1280px) {
+        max-width: 15rem;
+        margin: 0.5rem;
+    }
+    @media (max-width: 960px) {
+        max-width: 10rem;
+        margin: 0.3rem;
+    }
+`;
+
+const list: string = `
+    margin: 1rem 0px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60rem;
+    @media (max-width: 1280px) {
+        width: 46rem;
+    }
+    @media (max-width: 960px) {
+        width: 25rem;
+    }
 `;

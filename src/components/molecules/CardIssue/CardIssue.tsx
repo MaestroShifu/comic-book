@@ -17,7 +17,7 @@ export const CardIssue: React.FunctionComponent<ICardIssueProps> = (props) => {
     return (
         <WrapperCardIssue>
             <CardStyled type={props.isList ? 'list' : 'grid'}>
-                <img className='img-issue' src={props.sourceImg} />
+                <img className='img-issue' alt={props.name} src={props.sourceImg} />
                 <CardContent className={props.isList ? 'content-card' : ''}>
                     <Typography align='center' variant="body1" component="p">
                         <strong>{ `${props.name} #${props.issueNumber}` }</strong>
