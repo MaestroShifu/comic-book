@@ -14,7 +14,7 @@ export const syncData = (offset: number) => async (dispatch: Dispatch<AppActionT
             }
         });
     } catch (error) {
-        console.log(error);
+        alert('Upps!!! Network Error');
     } finally {
         dispatch(isLoading());
     }
@@ -56,7 +56,7 @@ export const getIssueData = (apiDetailUrl: string) => async (dispatch: Dispatch<
             }
         });
     } catch (error) {
-        console.log(error);
+        alert('Upps!!! Network Error');
     } finally {
         dispatch(isLoading());
     }
